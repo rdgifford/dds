@@ -1,0 +1,25 @@
+name
+student id
+phone number
+number of passengers
+origin (postal)
+destination (postal)
+
+
+
+
+
+http://getbootstrap.com/components/#responsive-embed
+RVM.io
+
+@people = ["Robbie", "Jonah", "Katie"]
+
+@people.each do |person|
+
+end
+
+
+
+form_for @ride do |form|
+  form.generate_stuff
+end
