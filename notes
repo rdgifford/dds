@@ -1,3 +1,19 @@
+When I select an option from the van dropdown corresponding to a ride,
+I want that ride to be assigned a van id from the selected option. I
+then want navigator "pages" (entries?) whose ids (not null or 0) are equal
+to van_ids to display rides with said van_ids.
+
+
+#the assign_van method within ride class should either assign an
+#entry from the ride table a new attribute called van, or push the
+#entry to a new table.
+
+#the first option is preferable, because it will be simpler and will
+#reduce redundancy.
+
+#auto assign w/ drop down?
+
+
 name
 student id
 phone number

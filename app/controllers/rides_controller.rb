@@ -34,11 +34,15 @@ class RidesController < ApplicationController
     @ride.delete
     redirect_to rides_path
   end
-  
+
   private
+  def assign_van
+    @van_id = :van_id.select
+  redirect_to rides_path
+  end
 
   def ride_params
-    params[:ride].permit( :name, :sid, :phone, :passengers, :origin, :destination)
+    params[:ride].permit(:van_id, :name, :sid, :phone, :passengers, :origin, :destination)
   end
 
 end
