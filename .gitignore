@@ -10,6 +10,7 @@
 /tmp/
 /notes
 /Guardfile
+/spring/*.pid
 
 ## Specific to RubyMotion:
 .dat*

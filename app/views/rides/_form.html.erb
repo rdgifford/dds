@@ -2,30 +2,31 @@
   <div class="form-group">
   <label>Student ID</label>
   <%= form.text_field :sid, class: "form-control" %>
-</div>
+  </div>
   <div class="form-group">
-<label>Name</label>
+  <label>Name</label>
   <%= form.text_field :name, class: "form-control" %>
-</div>
+  </div>
   <div class="form-group">
-<label>Origin Address</label>
-<%= form.text_field :origin, class: "form-control" %>
-</div>
+  <label>Origin Address</label>
+  <%= form.text_field :origin, class: "form-control" %>
+  </div>
   <div class="form-group">
-<label>Destination Address</label>
-<%= form.text_field :destination, class: "form-control" %>
-</div>
+  <label>Destination Address</label>
+  <%= form.text_field :destination, class: "form-control" %>
+  </div>
   <div class="form-group">
   <label>Number of Passengers</label>
   <%= form.number_field :passengers, class: "form-control" %>
-</div>
+  </div>
   <div class="form-group">
-<label>Phone Number</label>
-<%= form.text_field :phone, class: "form-control" %>
-</div>
+  <label>Phone Number</label>
+  <%= form.text_field :phone, class: "form-control" %>
+  </div>
   <div class="form-group">
   <label>Van</label>
-<%= form.select(:van_id, Ride::VANS, {include_blank: true}) %>
-</div>
-  <%= form.submit "Submit" %>
+  <br><%= form.select(:van_id, Ride::VANS, {include_blank: true}) %></br>
+  </div>
+  <button type="submit" class="btn btn-primary btn-block"></a>
+  Submit</button></div>
 <% end %>

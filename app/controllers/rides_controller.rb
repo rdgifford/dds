@@ -1,4 +1,5 @@
 class RidesController < ApplicationController
+  before_filter :authenticate_user!, only: [:index, :edit, :destroy, :show, :update]
 
   def index
     @rides=Ride.all

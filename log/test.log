@@ -802,3 +802,931 @@ UserTest: test_email_validation_should_reject_invalid_addresses
   [1m[36mUser Exists (0.3ms)[0m  [1mSELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('foo@bar_baz.com') LIMIT 1[0m
   [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users" WHERE LOWER("users"."email") = LOWER('foo@bar+baz.com') LIMIT 1
   [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36m (2.8ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar NOT NULL) [0m
+  [1m[35m (0.1ms)[0m  select sqlite_version(*)
+  [1m[36m (0.6ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+Migrating to CreateRides (20150714014735)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  CREATE TABLE "rides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" decimal, "origin" varchar, "destination" varchar) 
+  [1m[36mSQL (0.2ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20150714014735"]]
+  [1m[35m (0.9ms)[0m  commit transaction
+Migrating to ChangePassengers (20150714033416)
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  CREATE TEMPORARY TABLE "arides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" decimal, "origin" varchar, "destination" varchar) 
+  [1m[36m (0.0ms)[0m  [1mSELECT * FROM "rides"[0m
+  [1m[35m (0.6ms)[0m  DROP TABLE "rides"
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "rides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar) [0m
+  [1m[35m (0.0ms)[0m  SELECT * FROM "arides"
+  [1m[36m (0.2ms)[0m  [1mDROP TABLE "arides"[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20150714033416"]]
+  [1m[36m (0.8ms)[0m  [1mcommit transaction[0m
+Migrating to AddIndexToUsersEmail (20150725031722)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+SQLite3::SQLException: no such table: main.users: CREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddPasswordDigestToUsers (20150725035010)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "users" ADD "password_digest" varchar[0m
+SQLite3::SQLException: no such table: users: ALTER TABLE "users" ADD "password_digest" varchar
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddPasswordDigestToUsers (20150725035010)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "users" ADD "password_digest" varchar[0m
+SQLite3::SQLException: no such table: users: ALTER TABLE "users" ADD "password_digest" varchar
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to AddVanToRides (20150803081318)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "rides" ADD "van" integer[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20150803081318"]]
+  [1m[36m (0.7ms)[0m  [1mcommit transaction[0m
+Migrating to AddAssociationToRides (20150805203009)
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "rides" ADD "van_id" integer[0m
+  [1m[35m (0.1ms)[0m  select sqlite_version(*)
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "index_rides_on_van_id" ON "rides" ("van_id")[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20150805203009"]]
+  [1m[36m (0.7ms)[0m  [1mcommit transaction[0m
+Migrating to RemoveVanFromRides (20150805213710)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (1.4ms)[0m  [1mCREATE TEMPORARY TABLE "arides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van" integer, "van_id" integer) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "tindex_arides_on_van_id" ON "arides" ("van_id")[0m
+  [1m[35m (0.1ms)[0m  SELECT * FROM "rides"
+  [1m[36m (0.4ms)[0m  [1mDROP TABLE "rides"[0m
+  [1m[35m (0.3ms)[0m  CREATE TABLE "rides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer) 
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_rides_on_van_id" ON "rides" ("van_id")
+  [1m[36m (0.1ms)[0m  [1mSELECT * FROM "arides"[0m
+  [1m[35m (0.3ms)[0m  DROP TABLE "arides"
+  [1m[36m (0.8ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.2ms)[0m  [1mCREATE TEMPORARY TABLE "arides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "tindex_arides_on_van_id" ON "arides" ("van_id")[0m
+  [1m[35m (0.1ms)[0m  SELECT * FROM "rides"
+  [1m[36m (0.4ms)[0m  [1mDROP TABLE "rides"[0m
+  [1m[35m (0.2ms)[0m  CREATE TABLE "rides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer) 
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_rides_on_van_id" ON "rides" ("van_id")
+  [1m[36m (0.0ms)[0m  [1mSELECT * FROM "arides"[0m
+  [1m[35m (0.1ms)[0m  DROP TABLE "arides"
+  [1m[36m (0.7ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.8ms)[0m  ALTER TABLE "rides" ADD "completion" boolean
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.3ms)[0m  CREATE TEMPORARY TABLE "arides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer, "completion" boolean) 
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "tindex_arides_on_van_id" ON "arides" ("van_id")
+  [1m[36m (0.0ms)[0m  [1mSELECT * FROM "rides"[0m
+  [1m[35m (0.3ms)[0m  DROP TABLE "rides"
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "rides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer, "completion" boolean) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "index_rides_on_van_id" ON "rides" ("van_id")[0m
+  [1m[35m (0.1ms)[0m  SELECT * FROM "arides"
+  [1m[36m (0.1ms)[0m  [1mDROP TABLE "arides"[0m
+  [1m[35m (0.7ms)[0m  commit transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.1ms)[0m  CREATE TEMPORARY TABLE "arides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer, "completion" boolean) 
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "tindex_arides_on_van_id" ON "arides" ("van_id")
+  [1m[36m (0.0ms)[0m  [1mSELECT * FROM "rides"[0m
+  [1m[35m (0.4ms)[0m  DROP TABLE "rides"
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "rides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer, "completion" boolean) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "index_rides_on_van_id" ON "rides" ("van_id")[0m
+  [1m[35m (0.1ms)[0m  SELECT * FROM "arides"
+  [1m[36m (0.3ms)[0m  [1mDROP TABLE "arides"[0m
+  [1m[35m (0.8ms)[0m  commit transaction
+  [1m[36m (0.3ms)[0m  [1mALTER TABLE "rides" ADD "completion" boolean[0m
+SQLite3::SQLException: duplicate column name: completion: ALTER TABLE "rides" ADD "completion" boolean
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to RemoveVanFromRides (20150805213710)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (1.4ms)[0m  [1mCREATE TEMPORARY TABLE "arides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer, "completion" boolean) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "tindex_arides_on_van_id" ON "arides" ("van_id")
+  [1m[36m (0.1ms)[0m  [1mSELECT * FROM "rides"[0m
+  [1m[35m (0.3ms)[0m  DROP TABLE "rides"
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "rides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer, "completion" boolean) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "index_rides_on_van_id" ON "rides" ("van_id")[0m
+  [1m[35m (0.0ms)[0m  SELECT * FROM "arides"
+  [1m[36m (0.3ms)[0m  [1mDROP TABLE "arides"[0m
+  [1m[35m (2.1ms)[0m  commit transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  CREATE TEMPORARY TABLE "arides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer, "completion" boolean) 
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "tindex_arides_on_van_id" ON "arides" ("van_id")
+  [1m[36m (0.1ms)[0m  [1mSELECT * FROM "rides"[0m
+  [1m[35m (0.2ms)[0m  DROP TABLE "rides"
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "rides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer, "completion" boolean) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "index_rides_on_van_id" ON "rides" ("van_id")[0m
+  [1m[35m (0.1ms)[0m  SELECT * FROM "arides"
+  [1m[36m (0.2ms)[0m  [1mDROP TABLE "arides"[0m
+  [1m[35m (0.8ms)[0m  commit transaction
+  [1m[36m (0.5ms)[0m  [1mALTER TABLE "rides" ADD "completion" boolean[0m
+SQLite3::SQLException: duplicate column name: completion: ALTER TABLE "rides" ADD "completion" boolean
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.2ms)[0m  [1mCREATE TEMPORARY TABLE "arides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer, "completion" boolean) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "tindex_arides_on_van_id" ON "arides" ("van_id")[0m
+  [1m[35m (0.1ms)[0m  SELECT * FROM "rides"
+  [1m[36m (0.3ms)[0m  [1mDROP TABLE "rides"[0m
+  [1m[35m (0.2ms)[0m  CREATE TABLE "rides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer, "completion" boolean) 
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_rides_on_van_id" ON "rides" ("van_id")
+  [1m[36m (0.1ms)[0m  [1mSELECT * FROM "arides"[0m
+  [1m[35m (0.1ms)[0m  DROP TABLE "arides"
+  [1m[36m (0.8ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+  [1m[36m (0.2ms)[0m  [1mCREATE TEMPORARY TABLE "arides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer, "completion" boolean) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "tindex_arides_on_van_id" ON "arides" ("van_id")[0m
+  [1m[35m (0.1ms)[0m  SELECT * FROM "rides"
+  [1m[36m (0.2ms)[0m  [1mDROP TABLE "rides"[0m
+  [1m[35m (0.1ms)[0m  CREATE TABLE "rides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer, "completion" boolean) 
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "index_rides_on_van_id" ON "rides" ("van_id")
+  [1m[36m (0.0ms)[0m  [1mSELECT * FROM "arides"[0m
+  [1m[35m (0.1ms)[0m  DROP TABLE "arides"
+  [1m[36m (0.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.3ms)[0m  ALTER TABLE "rides" ADD "completion" boolean
+SQLite3::SQLException: duplicate column name: completion: ALTER TABLE "rides" ADD "completion" boolean
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to RemoveVanFromRides (20150805213710)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (1.2ms)[0m  [1mCREATE TEMPORARY TABLE "arides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer, "completion" boolean) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+
+  [1m[36m (0.0ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "tindex_arides_on_van_id" ON "arides" ("van_id")
+  [1m[36m (0.1ms)[0m  [1mSELECT * FROM "rides"[0m
+  [1m[35m (0.2ms)[0m  DROP TABLE "rides"
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "rides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer, "completion" boolean) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "index_rides_on_van_id" ON "rides" ("van_id")[0m
+  [1m[35m (0.0ms)[0m  SELECT * FROM "arides"
+  [1m[36m (0.3ms)[0m  [1mDROP TABLE "arides"[0m
+  [1m[35m (2.2ms)[0m  commit transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  CREATE TEMPORARY TABLE "arides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer, "completion" boolean) 
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "tindex_arides_on_van_id" ON "arides" ("van_id")
+  [1m[36m (0.0ms)[0m  [1mSELECT * FROM "rides"[0m
+  [1m[35m (0.2ms)[0m  DROP TABLE "rides"
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "rides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer, "completion" boolean) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "index_rides_on_van_id" ON "rides" ("van_id")[0m
+  [1m[35m (0.0ms)[0m  SELECT * FROM "arides"
+  [1m[36m (0.1ms)[0m  [1mDROP TABLE "arides"[0m
+  [1m[35m (0.7ms)[0m  commit transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  CREATE TEMPORARY TABLE "arides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer, "completion" boolean) 
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "tindex_arides_on_van_id" ON "arides" ("van_id")
+  [1m[36m (0.1ms)[0m  [1mSELECT * FROM "rides"[0m
+  [1m[35m (0.3ms)[0m  DROP TABLE "rides"
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "rides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer, "completion" boolean) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "index_rides_on_van_id" ON "rides" ("van_id")[0m
+  [1m[35m (0.1ms)[0m  SELECT * FROM "arides"
+  [1m[36m (0.1ms)[0m  [1mDROP TABLE "arides"[0m
+  [1m[35m (0.8ms)[0m  commit transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  CREATE TEMPORARY TABLE "arides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer, "completion" boolean) 
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "tindex_arides_on_van_id" ON "arides" ("van_id")
+  [1m[36m (0.1ms)[0m  [1mSELECT * FROM "rides"[0m
+  [1m[35m (0.4ms)[0m  DROP TABLE "rides"
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "rides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer, "completion" boolean) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "index_rides_on_van_id" ON "rides" ("van_id")[0m
+  [1m[35m (0.0ms)[0m  SELECT * FROM "arides"
+  [1m[36m (0.1ms)[0m  [1mDROP TABLE "arides"[0m
+  [1m[35m (0.8ms)[0m  commit transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to RemoveVanFromRides (20150805213710)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (1.3ms)[0m  [1mCREATE TEMPORARY TABLE "arides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer, "completion" boolean) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "tindex_arides_on_van_id" ON "arides" ("van_id")
+  [1m[36m (0.1ms)[0m  [1mSELECT * FROM "rides"[0m
+  [1m[35m (0.3ms)[0m  DROP TABLE "rides"
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "rides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer, "completion" boolean) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "index_rides_on_van_id" ON "rides" ("van_id")[0m
+  [1m[35m (0.0ms)[0m  SELECT * FROM "arides"
+  [1m[36m (0.3ms)[0m  [1mDROP TABLE "arides"[0m
+  [1m[35m (2.6ms)[0m  commit transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.2ms)[0m  CREATE TEMPORARY TABLE "arides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer, "completion" boolean) 
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m  CREATE  INDEX "tindex_arides_on_van_id" ON "arides" ("van_id")
+  [1m[36m (0.0ms)[0m  [1mSELECT * FROM "rides"[0m
+  [1m[35m (0.2ms)[0m  DROP TABLE "rides"
+  [1m[36m (0.1ms)[0m  [1mCREATE TABLE "rides" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar, "sid" varchar, "phone" varchar, "passengers" integer, "origin" varchar, "destination" varchar, "van_id" integer, "completion" boolean) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_arides_on_van_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1mCREATE  INDEX "index_rides_on_van_id" ON "rides" ("van_id")[0m
+  [1m[35m (0.1ms)[0m  SELECT * FROM "arides"
+  [1m[36m (0.1ms)[0m  [1mDROP TABLE "arides"[0m
+  [1m[35m (0.7ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20150805213710"]]
+  [1m[36m (0.7ms)[0m  [1mcommit transaction[0m
+Migrating to DropUser (20150903181036)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.4ms)[0m  [1mDROP TABLE "Users"[0m
+SQLite3::SQLException: no such table: Users: DROP TABLE "Users"
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to DropTables (20150903181317)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.4ms)[0m  [1mDROP TABLE "Numbers"[0m
+SQLite3::SQLException: no such table: Numbers: DROP TABLE "Numbers"
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Migrating to DeviseCreateUsers (20150903183024)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.4ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar DEFAULT '' NOT NULL, "encrypted_password" varchar DEFAULT '' NOT NULL, "reset_password_token" varchar, "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar, "last_sign_in_ip" varchar, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35m (0.0ms)[0m  select sqlite_version(*)
+  [1m[36m (1.2ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+
+  [1m[36m (0.2ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20150903183024"]]
+  [1m[36m (2.2ms)[0m  [1mcommit transaction[0m
+Migrating to CreateShifts (20150903210244)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.6ms)[0m  [1mCREATE TABLE "shifts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "opening" integer, "closing" integer, "gas" decimal, "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) [0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20150903210244"]]
+  [1m[36m (0.9ms)[0m  [1mcommit transaction[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_rides_on_van_id' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:13:34', '2015-09-06 20:13:34', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:13:34', '2015-09-06 20:13:34', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:13:34', '2015-09-06 20:13:34', 980190962)
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:13:34', '2015-09-06 20:13:34', 298486374)[0m
+SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:13:34', '2015-09-06 20:13:34', 298486374)
+  [1m[35m (0.5ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:14:30', '2015-09-06 20:14:30', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:14:30', '2015-09-06 20:14:30', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:14:30', '2015-09-06 20:14:30', 980190962)
+  [1m[36mFixture Insert (0.4ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:14:30', '2015-09-06 20:14:30', 298486374)[0m
+SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:14:30', '2015-09-06 20:14:30', 298486374)
+  [1m[35m (1.8ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:15:12', '2015-09-06 20:15:12', 980190962)[0m
+  [1m[35mFixture Insert (0.0ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:15:12', '2015-09-06 20:15:12', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:15:12', '2015-09-06 20:15:12', 980190962)
+  [1m[36mFixture Insert (0.5ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:15:12', '2015-09-06 20:15:12', 298486374)[0m
+SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:15:12', '2015-09-06 20:15:12', 298486374)
+  [1m[35m (2.3ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:17:21', '2015-09-06 20:17:21', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:17:21', '2015-09-06 20:17:21', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:17:21', '2015-09-06 20:17:21', 980190962)
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:17:21', '2015-09-06 20:17:21', 298486374)[0m
+SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:17:21', '2015-09-06 20:17:21', 298486374)
+  [1m[35m (2.3ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:25:57', '2015-09-06 20:25:57', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:25:57', '2015-09-06 20:25:57', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:25:57', '2015-09-06 20:25:57', 980190962)
+  [1m[36mFixture Insert (0.4ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:25:57', '2015-09-06 20:25:57', 298486374)[0m
+SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:25:57', '2015-09-06 20:25:57', 298486374)
+  [1m[35m (0.6ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:26:38', '2015-09-06 20:26:38', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:26:38', '2015-09-06 20:26:38', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:26:38', '2015-09-06 20:26:38', 980190962)
+  [1m[36mFixture Insert (0.4ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:26:38', '2015-09-06 20:26:38', 298486374)[0m
+SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:26:38', '2015-09-06 20:26:38', 298486374)
+  [1m[35m (2.3ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:27:56', '2015-09-06 20:27:56', 980190962)[0m
+  [1m[35mFixture Insert (0.0ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:27:56', '2015-09-06 20:27:56', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:27:56', '2015-09-06 20:27:56', 980190962)
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:27:56', '2015-09-06 20:27:56', 298486374)[0m
+SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:27:56', '2015-09-06 20:27:56', 298486374)
+  [1m[35m (1.5ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:28:39', '2015-09-06 20:28:39', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:28:39', '2015-09-06 20:28:39', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:28:39', '2015-09-06 20:28:39', 980190962)
+  [1m[36mFixture Insert (0.4ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:28:39', '2015-09-06 20:28:39', 298486374)[0m
+SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:28:39', '2015-09-06 20:28:39', 298486374)
+  [1m[35m (1.8ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:31:53', '2015-09-06 20:31:53', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:31:53', '2015-09-06 20:31:53', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:31:53', '2015-09-06 20:31:53', 980190962)
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:31:53', '2015-09-06 20:31:53', 298486374)[0m
+SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:31:53', '2015-09-06 20:31:53', 298486374)
+  [1m[35m (1.7ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:39:58', '2015-09-06 20:39:58', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:39:58', '2015-09-06 20:39:58', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:39:58', '2015-09-06 20:39:58', 980190962)
+  [1m[36mFixture Insert (0.4ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:39:58', '2015-09-06 20:39:58', 298486374)[0m
+SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-09-06 20:39:58', '2015-09-06 20:39:58', 298486374)
+  [1m[35m (1.5ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.8ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:44:24', '2015-09-06 20:44:24', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:44:24', '2015-09-06 20:44:24', 298486374)
+  [1m[36m (2.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+-------------------------------
+RideTest: test_should_get_index
+-------------------------------
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:46:05', '2015-09-06 20:46:05', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:46:05', '2015-09-06 20:46:05', 298486374)
+  [1m[36m (2.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+------------------------------------------
+RidesControllerTest: test_should_get_index
+------------------------------------------
+Processing by RidesController#index as HTML
+  [1m[36mRide Load (0.2ms)[0m  [1mSELECT "rides".* FROM "rides"[0m
+  Rendered rides/index.html.erb within layouts/application (9.6ms)
+Completed 500 Internal Server Error in 4377ms (ActiveRecord: 0.2ms)
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:47:57', '2015-09-06 20:47:57', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:47:57', '2015-09-06 20:47:57', 298486374)
+  [1m[36m (0.8ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+------------------------------------------
+RidesControllerTest: test_should_get_index
+------------------------------------------
+Processing by RidesController#index as HTML
+  [1m[36mRide Load (0.2ms)[0m  [1mSELECT "rides".* FROM "rides"[0m
+  Rendered rides/index.html.erb within layouts/application (8.6ms)
+Completed 500 Internal Server Error in 161ms (ActiveRecord: 0.2ms)
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:51:56', '2015-09-06 20:51:56', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:51:56', '2015-09-06 20:51:56', 298486374)
+  [1m[36m (0.7ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+------------------------------------------
+RidesControllerTest: test_should_get_index
+------------------------------------------
+Processing by RidesController#index as HTML
+  [1m[36mRide Load (0.2ms)[0m  [1mSELECT "rides".* FROM "rides"[0m
+  Rendered rides/index.html.erb within layouts/application (8.7ms)
+Completed 200 OK in 1382ms (Views: 1381.5ms | ActiveRecord: 0.2ms)
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:52:45', '2015-09-06 20:52:45', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 20:52:45', '2015-09-06 20:52:45', 298486374)
+  [1m[36m (2.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+------------------------------------------
+RidesControllerTest: test_should_get_index
+------------------------------------------
+Processing by RidesController#index as HTML
+  [1m[36mRide Load (0.2ms)[0m  [1mSELECT "rides".* FROM "rides"[0m
+  Rendered rides/index.html.erb within layouts/application (10.2ms)
+Completed 200 OK in 183ms (Views: 182.2ms | ActiveRecord: 0.2ms)
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:01:51', '2015-09-06 21:01:51', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:01:51', '2015-09-06 21:01:51', 298486374)
+  [1m[36m (2.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+------------------------------------------
+RidesControllerTest: test_should_get_index
+------------------------------------------
+Processing by RidesController#index as HTML
+  [1m[36mRide Load (0.2ms)[0m  [1mSELECT "rides".* FROM "rides"[0m
+  Rendered rides/index.html.erb within layouts/application (11.1ms)
+Completed 200 OK in 199ms (Views: 197.7ms | ActiveRecord: 0.2ms)
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:03:43', '2015-09-06 21:03:43', 980190962)[0m
+  [1m[35mFixture Insert (0.0ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:03:43', '2015-09-06 21:03:43', 298486374)
+  [1m[36m (2.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+------------------------------------------
+RidesControllerTest: test_should_get_index
+------------------------------------------
+Processing by RidesController#index as HTML
+  [1m[36mRide Load (0.2ms)[0m  [1mSELECT "rides".* FROM "rides"[0m
+  Rendered rides/index.html.erb within layouts/application (11.1ms)
+Completed 200 OK in 184ms (Views: 182.9ms | ActiveRecord: 0.2ms)
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:04:13', '2015-09-06 21:04:13', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:04:13', '2015-09-06 21:04:13', 298486374)
+  [1m[36m (2.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+------------------------------------------
+RidesControllerTest: test_should_get_index
+------------------------------------------
+Processing by RidesController#index as HTML
+  [1m[36mRide Load (0.3ms)[0m  [1mSELECT "rides".* FROM "rides"[0m
+  Rendered rides/index.html.erb within layouts/application (10.0ms)
+Completed 200 OK in 194ms (Views: 192.6ms | ActiveRecord: 0.3ms)
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:05:24', '2015-09-06 21:05:24', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:05:24', '2015-09-06 21:05:24', 298486374)
+  [1m[36m (1.8ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+------------------------------------------
+RidesControllerTest: test_should_get_index
+------------------------------------------
+Processing by RidesController#index as HTML
+  [1m[36mRide Load (0.2ms)[0m  [1mSELECT "rides".* FROM "rides"[0m
+  Rendered rides/index.html.erb within layouts/application (10.2ms)
+Completed 200 OK in 193ms (Views: 191.9ms | ActiveRecord: 0.2ms)
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:14:23', '2015-09-06 21:14:23', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:14:23', '2015-09-06 21:14:23', 298486374)
+  [1m[36m (0.8ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+------------------------------------------
+RidesControllerTest: test_should_get_index
+------------------------------------------
+Processing by RidesController#index as HTML
+  [1m[36mRide Load (0.2ms)[0m  [1mSELECT "rides".* FROM "rides"[0m
+  Rendered rides/index.html.erb within layouts/application (9.6ms)
+Completed 200 OK in 188ms (Views: 187.0ms | ActiveRecord: 0.2ms)
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:21:08', '2015-09-06 21:21:08', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:21:08', '2015-09-06 21:21:08', 298486374)
+  [1m[36m (2.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+------------------------------------------
+RidesControllerTest: test_should_get_index
+------------------------------------------
+Processing by RidesController#index as HTML
+  [1m[36mRide Load (0.2ms)[0m  [1mSELECT "rides".* FROM "rides"[0m
+  Rendered rides/index.html.erb within layouts/application (7.6ms)
+Completed 200 OK in 185ms (Views: 184.3ms | ActiveRecord: 0.2ms)
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:21:11', '2015-09-06 21:21:11', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:21:11', '2015-09-06 21:21:11', 298486374)
+  [1m[36m (2.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+------------------------------------------
+RidesControllerTest: test_should_get_index
+------------------------------------------
+Processing by RidesController#index as HTML
+  [1m[36mRide Load (0.2ms)[0m  [1mSELECT "rides".* FROM "rides"[0m
+  Rendered rides/index.html.erb within layouts/application (7.8ms)
+Completed 200 OK in 177ms (Views: 176.3ms | ActiveRecord: 0.2ms)
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:25:06', '2015-09-06 21:25:06', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:25:06', '2015-09-06 21:25:06', 298486374)
+  [1m[36m (2.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+------------------------------------------
+RidesControllerTest: test_should_get_index
+------------------------------------------
+Processing by RidesController#index as HTML
+Completed 500 Internal Server Error in 9ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:26:07', '2015-09-06 21:26:07', 980190962)[0m
+  [1m[35mFixture Insert (0.0ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:26:07', '2015-09-06 21:26:07', 298486374)
+  [1m[36m (2.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+------------------------------------------
+RidesControllerTest: test_should_get_index
+------------------------------------------
+Processing by RidesController#index as HTML
+Completed 500 Internal Server Error in 8ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:27:15', '2015-09-06 21:27:15', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:27:15', '2015-09-06 21:27:15', 298486374)
+  [1m[36m (2.5ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+------------------------------------------
+RidesControllerTest: test_should_get_index
+------------------------------------------
+Processing by RidesController#index as HTML
+Completed 500 Internal Server Error in 8ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.8ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:27:50', '2015-09-06 21:27:50', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:27:50', '2015-09-06 21:27:50', 298486374)
+  [1m[36m (2.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+-----------------------------------------------------
+RideRestrictionsTest: test_login_restriction_on_rides
+-----------------------------------------------------
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+------------------------------------------
+RidesControllerTest: test_should_get_index
+------------------------------------------
+Processing by RidesController#index as HTML
+Completed 500 Internal Server Error in 7ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:32:16', '2015-09-06 21:32:16', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:32:16', '2015-09-06 21:32:16', 298486374)
+  [1m[36m (2.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+------------------------------------------
+RidesControllerTest: test_should_get_index
+------------------------------------------
+Processing by RidesController#index as HTML
+Completed 500 Internal Server Error in 9ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.2ms)[0m  [1mrollback transaction[0m
