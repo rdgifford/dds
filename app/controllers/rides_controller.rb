@@ -1,4 +1,5 @@
 class RidesController < ApplicationController
+
   def index
     @rides=Ride.all
   end
@@ -37,9 +38,8 @@ class RidesController < ApplicationController
 
   private
   def assign_van
-    @van_id = :van_id.select
-  redirect_to rides_path
   end
+  helper_method :assign_van
 
   def ride_params
     params[:ride].permit(:van_id, :name, :sid, :phone, :passengers, :origin, :destination)

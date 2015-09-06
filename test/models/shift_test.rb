@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class DispatcherTest < ActiveSupport::TestCase
+class ShiftTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

@@ -8,6 +8,8 @@
 /test/tmp/
 /test/version_tmp/
 /tmp/
+/notes
+/Guardfile
 
 ## Specific to RubyMotion:
 .dat*
