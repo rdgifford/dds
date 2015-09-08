@@ -1730,3 +1730,179 @@ RidesControllerTest: test_should_get_index
 Processing by RidesController#index as HTML
 Completed 500 Internal Server Error in 9ms (ActiveRecord: 0.0ms)
   [1m[36m (0.2ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:47:10', '2015-09-06 21:47:10', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:47:10', '2015-09-06 21:47:10', 298486374)
+  [1m[36m (1.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+------------------------------------------
+RidesControllerTest: test_should_get_index
+------------------------------------------
+Processing by RidesController#index as HTML
+Completed 500 Internal Server Error in 8ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:47:13', '2015-09-06 21:47:13', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:47:13', '2015-09-06 21:47:13', 298486374)
+  [1m[36m (2.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+------------------------------------------
+RidesControllerTest: test_should_get_index
+------------------------------------------
+Processing by RidesController#index as HTML
+Completed 500 Internal Server Error in 7ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:53:04', '2015-09-06 21:53:04', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:53:04', '2015-09-06 21:53:04', 298486374)
+  [1m[36m (2.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+------------------------------------------
+RidesControllerTest: test_should_get_index
+------------------------------------------
+Processing by RidesController#index as HTML
+Completed 500 Internal Server Error in 8ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+------------------------------------------------
+StaticPagesControllerTest: test_should_get_about
+------------------------------------------------
+Processing by StaticPagesController#about as HTML
+  Rendered static_pages/about.html.erb within layouts/application (1.2ms)
+Completed 200 OK in 297ms (Views: 296.8ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+----------------------------------------------
+StaticPagesControllerTest: test_should_get_faq
+----------------------------------------------
+Processing by StaticPagesController#faq as HTML
+  Rendered static_pages/faq.html.erb within layouts/application (0.3ms)
+Completed 200 OK in 3ms (Views: 2.9ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+---------------------------------------------------
+StaticPagesControllerTest: test_should_get_policies
+---------------------------------------------------
+Processing by StaticPagesController#policies as HTML
+  Rendered static_pages/policies.html.erb within layouts/application (0.4ms)
+Completed 200 OK in 5ms (Views: 4.5ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+-----------------------------------------------
+StaticPagesControllerTest: test_should_get_home
+-----------------------------------------------
+Processing by StaticPagesController#home as HTML
+  Rendered static_pages/home.html.erb within layouts/application (0.4ms)
+Completed 200 OK in 4ms (Views: 3.4ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.4ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:53:16', '2015-09-06 21:53:16', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 21:53:16', '2015-09-06 21:53:16', 298486374)
+  [1m[36m (2.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+-----------------------------------------------
+StaticPagesControllerTest: test_should_get_home
+-----------------------------------------------
+Processing by StaticPagesController#home as HTML
+  Rendered static_pages/home.html.erb within layouts/application (1.7ms)
+Completed 200 OK in 175ms (Views: 174.4ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+----------------------------------------------
+StaticPagesControllerTest: test_should_get_faq
+----------------------------------------------
+Processing by StaticPagesController#faq as HTML
+  Rendered static_pages/faq.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 6ms (Views: 5.2ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------
+StaticPagesControllerTest: test_should_get_policies
+---------------------------------------------------
+Processing by StaticPagesController#policies as HTML
+  Rendered static_pages/policies.html.erb within layouts/application (0.3ms)
+Completed 200 OK in 3ms (Views: 3.0ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+------------------------------------------------
+StaticPagesControllerTest: test_should_get_about
+------------------------------------------------
+Processing by StaticPagesController#about as HTML
+  Rendered static_pages/about.html.erb within layouts/application (0.3ms)
+Completed 200 OK in 3ms (Views: 2.6ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+------------------------------------------
+RidesControllerTest: test_should_get_index
+------------------------------------------
+Processing by RidesController#index as HTML
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "rides"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "rides" ("id") VALUES (980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "rides" ("id") VALUES (298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "shifts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 22:03:14', '2015-09-06 22:03:14', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "shifts" ("opening", "closing", "gas", "created_at", "updated_at", "id") VALUES (1, 1, 9.99, '2015-09-06 22:03:14', '2015-09-06 22:03:14', 298486374)
+  [1m[36m (2.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+------------------------------------------
+RidesControllerTest: test_should_get_index
+------------------------------------------
+Processing by RidesController#index as HTML
+Completed 500 Internal Server Error in 8ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+----------------------------------------------
+StaticPagesControllerTest: test_should_get_faq
+----------------------------------------------
+Processing by StaticPagesController#faq as HTML
+  Rendered static_pages/faq.html.erb within layouts/application (1.5ms)
+Completed 200 OK in 169ms (Views: 167.9ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------
+StaticPagesControllerTest: test_should_get_policies
+---------------------------------------------------
+Processing by StaticPagesController#policies as HTML
+  Rendered static_pages/policies.html.erb within layouts/application (0.6ms)
+Completed 200 OK in 6ms (Views: 5.7ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+-----------------------------------------------
+StaticPagesControllerTest: test_should_get_home
+-----------------------------------------------
+Processing by StaticPagesController#home as HTML
+  Rendered static_pages/home.html.erb within layouts/application (0.5ms)
+Completed 200 OK in 5ms (Views: 4.4ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+------------------------------------------------
+StaticPagesControllerTest: test_should_get_about
+------------------------------------------------
+Processing by StaticPagesController#about as HTML
+  Rendered static_pages/about.html.erb within layouts/application (0.3ms)
+Completed 200 OK in 3ms (Views: 2.6ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
