@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150907224148) do
+ActiveRecord::Schema.define(version: 20150910214230) do
 
   create_table "rides", force: :cascade do |t|
     t.string  "name"
@@ -20,28 +20,18 @@ ActiveRecord::Schema.define(version: 20150907224148) do
     t.integer "passengers"
     t.string  "origin"
     t.string  "destination"
-    t.integer "van_id"
     t.boolean "completion"
+    t.integer "vehicle_id"
   end
 
-  add_index "rides", ["van_id"], name: "index_rides_on_van_id"
-
-  create_table "sessions", force: :cascade do |t|
-    t.string   "session_id", null: false
-    t.text     "data"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true
-  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at"
+  add_index "rides", ["vehicle_id"], name: "index_rides_on_vehicle_id"
 
   create_table "shifts", force: :cascade do |t|
-    t.integer  "opening"
-    t.integer  "closing"
-    t.decimal  "gas"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "shift_id"
+    t.integer  "vehicle_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "users", force: :cascade do |t|
@@ -61,5 +51,24 @@ ActiveRecord::Schema.define(version: 20150907224148) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "users_shifts", force: :cascade do |t|
+    t.integer  "shift_id"
+    t.integer  "user_id"
+    t.integer  "position_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "vehicles_shifts", force: :cascade do |t|
+    t.integer  "shift_id"
+    t.integer  "vehicle_id"
+    t.integer  "start_mileage"
+    t.integer  "end_mileage"
+    t.decimal  "start_gas"
+    t.decimal  "end_gas"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
 
 end

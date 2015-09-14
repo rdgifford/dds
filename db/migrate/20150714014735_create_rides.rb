@@ -4,9 +4,12 @@ class CreateRides < ActiveRecord::Migration
     t.string :name
     t.string :sid
     t.string :phone
-    t.decimal :passengers
+    t.integer :passengers
     t.string :origin
     t.string :destination
+    t.boolean :completion
+    t.integer :vehicle_id
     end
+    add_index :rides, :vehicle_id
   end
 end

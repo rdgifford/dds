@@ -1,0 +1,2 @@
+module VehiclesShiftsHelper
+end

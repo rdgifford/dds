@@ -14,7 +14,7 @@
   <tr align="left">
     <td><%= link_to ride.id, ride_path(ride)%></td>
     </div> </td>
-    <td><%= ride.van_id %></td>
+    <td><%= ride.vehicle_id %></td>
     <%#= select_tag(:van_id, options_for_select([1, 2, 3]),{ selected: ride.van_id }, { onchange: "$('#update').submit;" } include_blank: true) %>
     <td><%= ride.sid%></td>
     <td><%= ride.name%></td>
@@ -23,7 +23,7 @@
     <td><%= ride.passengers%></td>
     <td><%= ride.phone%></td>
     <td><%= link_to "Edit", edit_ride_path(ride), class:"btn btn-default btn-xs" %>
-    <%= link_to "Delete", ride_path(ride), class:"btn btn-danger btn-xs", method: :delete, data: { confirm: "Are you sure you want to delete this ride?" } %></td>
+<%= link_to "Delete", ride_path(ride), class:"btn btn-danger btn-xs", method: :delete, data: { confirm: "Are you sure you want to delete this ride?" } %></td>
   </tr>
 <% end %>
 </table>

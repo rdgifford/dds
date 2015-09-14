@@ -40,10 +40,10 @@ class RidesController < ApplicationController
   private
   def assign_van
   end
-  helper_method :assign_van
+  helper_method :assign_vehicle
 
   def ride_params
-    params[:ride].permit(:van_id, :name, :sid, :phone, :passengers, :origin, :destination)
+    params[:ride].permit(:vehicle_id, :name, :sid, :phone, :passengers, :origin, :destination)
   end
 
 end

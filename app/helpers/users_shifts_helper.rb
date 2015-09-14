@@ -1,0 +1,2 @@
+module UsersShiftsHelper
+end

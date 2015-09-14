@@ -6,8 +6,11 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Dds
+module DDS
   class Application < Rails::Application
+    ActiveRecord::SessionStore::Session.table_name = 'shift_session_table'
+    ActiveRecord::SessionStore::Session.primary_key = 'shift_session_id'
+    ActiveRecord::SessionStore::Session.data_column_name = 'shift_session_data'
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
