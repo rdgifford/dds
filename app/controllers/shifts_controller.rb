@@ -14,12 +14,9 @@ class ShiftsController < ApplicationController
   end
 
   def create
-    #unless a shift does not exist and shift is valid, create a new one
-    unless !Shift.exists? && Shift.valid?
-    @shift = Shift.new
+    @shift = Shift.new(created_at: Time.now)
     @shift.save
     redirect_to shift_path(@shift)
-    end
   end
 
   def update
