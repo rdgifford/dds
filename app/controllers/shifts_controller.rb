@@ -13,10 +13,17 @@ class ShiftsController < ApplicationController
   def edit
   end
 
+#if an active shift does not exist create a
+#new active shift, otherwise redirect to the
+#current active shift
   def create
-    @shift = Shift.new(created_at: Time.now)
-    @shift.save
-    redirect_to shift_path(@shift)
+    if Shift.active.exists?
+      redirect_to shift_path(@shift)
+    else
+      @shift = Shift.new
+      @shift.save
+      redirect_to shift_path(@shift)
+    end
   end
 
   def update

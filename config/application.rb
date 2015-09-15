@@ -8,9 +8,7 @@ Bundler.require(*Rails.groups)
 
 module DDS
   class Application < Rails::Application
-    ActiveRecord::SessionStore::Session.table_name = 'shift_session_table'
-    ActiveRecord::SessionStore::Session.primary_key = 'shift_session_id'
-    ActiveRecord::SessionStore::Session.data_column_name = 'shift_session_data'
+    config.autoload_paths += %W(#{config.root}/app/models/shift.rb)
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
