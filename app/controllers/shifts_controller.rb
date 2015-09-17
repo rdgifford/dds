@@ -17,13 +17,8 @@ class ShiftsController < ApplicationController
 #new active shift, otherwise redirect to the
 #current active shift
   def create
-    if Shift.active.exists?
-      redirect_to shift_path(@shift)
-    else
-      @shift = Shift.new
-      @shift.save
-      redirect_to shift_path(@shift)
-    end
+    @shift = Shift.active.first_or_create!
+    redirect_to shift_path(@shift)
   end
 
   def update
