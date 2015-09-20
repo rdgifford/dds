@@ -1,20 +1,19 @@
 class ShiftsController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => :create
   before_filter :authenticate_user!
+
   def index
     s = Shift.active.first
     @shift = s
     s.users_shifts.build
-    @users_shift = s.users_shifts.first_or_create!(user_id: current_user.id)
+    @users_shift = s.users_shifts.first
   end
 
   def show
     @shift = Shift.find(params[:id])
-    @shift.users_shifts.build
   end
 
   def new
-    @shift.users_shifts.build
   end
 
   def edit
@@ -25,6 +24,9 @@ class ShiftsController < ApplicationController
 #current active shift
   def create
     Shift.active.first_or_create!
+    s = Shift.active.first
+    s.users_shifts.build
+    s.users_shifts.find_or_create_by!(user_id: current_user.id)
     redirect_to work_path
   end
 

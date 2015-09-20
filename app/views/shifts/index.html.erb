@@ -1,32 +1,32 @@
 <html>
-<h1>Work</h1>
-<p><strong>Vehicle ID</strong> <%= @shift.vehicle_id %></p>
-<p><strong>Created At</strong> <%= @shift.created_at %></p>
-<p><strong>Updated At</strong> <%= @shift.updated_at %></p>
-<h3>Users Shifts</h3>
-<p><strong>Position ID</strong> <%= @users_shift.position_id %></p>
-<p><strong>Shift ID</strong> <%= @users_shift.shift_id %></p>
-<p><strong>User ID</strong> <%= @users_shift.user_id %></p>
-<p><strong>Created At</strong> <%= @users_shift.created_at %></p>
-<p><strong>Updated At</strong> <%= @users_shift.updated_at %></p>
-<%= form_for(@shift) do |f| %>
-  <%= f.fields_for :users_shifts do |users_shifts_form| %>
-        <%= users_shifts_form.label :position_id %><br>
-        <%= users_shifts_form.number_field :position_id %>
-        <%= users_shifts_form.button tag "Dispatcher" %>
-        <% end %>
+  <h1>Work</h1>
+    <p><strong>Shift ID</strong> <%= @shift.id %></p>
+    <p><strong>Vehicle ID</strong> <%= @shift.vehicle_id %></p>
+    <p><strong>Created At</strong> <%= @shift.created_at %></p>
+    <p><strong>Updated At</strong> <%= @shift.updated_at %></p>
 
-  <%= f.fields_for :users_shifts do |users_shifts_form| %>
-        <%= users_shifts_form.button tag "Dispatcher" %>
-        <% end %>
+  <h3>Users Shift</h3>
+    <p><strong>Users Shift ID</strong> <%= @users_shift.id %></p>
+    <p><strong>Position ID</strong> <%= @users_shift.position_id %></p>
+    <p><strong>Shift ID</strong> <%= @users_shift.shift_id %></p>
+    <p><strong>User ID</strong> <%= @users_shift.user_id %></p>
+    <p><strong>Created At</strong> <%= @users_shift.created_at %></p>
+    <p><strong>Updated At</strong> <%= @users_shift.updated_at %></p>
 
-        <%#= users_shifts_form.button tag "Dispatcher" %>
-        <%#= users_shifts_form.button_tag "Navigator", data: { :value => position_id: 2 } %>
-        <%#= users_shifts_form.button_tag "Driver", data: { position_id: 3 } %>
-<% end %>
-<div class="btn-group" role="group" aria-label="...">
-  <button type="button" class="btn btn-default">Left</button>
-  <button type="button" class="btn btn-default">Middle</button>
-  <button type="button" class="btn btn-default">Right</button>
-</div>
+  <div class="btn-group" role="group" aria-label="...">
+    <div class="btn-group" role="group">
+      <%= form_for @users_shift do |f| %>
+        <%= f.hidden_field :position_id, :value => 1 %>
+        <%= f.submit 'Dispatcher', class: "btn btn-default" %>
+      <% end %>
+      <%= form_for @users_shift do |f| %>
+        <%= f.hidden_field :position_id, :value => 2 %>
+        <%= f.submit 'Navigator', class: "btn btn-default" %>
+      <% end %>
+      <%= form_for @users_shift do |f| %>
+        <%= f.hidden_field :position_id, :value => 3 %>
+        <%= f.submit 'Driver', class: "btn btn-default" %>
+      <% end %>
+    </div>
+  </div>
 </html>
