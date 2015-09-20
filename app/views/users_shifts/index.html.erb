@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Users Shifts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users_shifts.each do |users_shift| %>
+      <tr>
+        <td><%= link_to 'Show', users_shift %></td>
+        <td><%= link_to 'Edit', edit_users_shift_path(users_shift) %></td>
+        <td><%= link_to 'Destroy', users_shift, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Users shift', new_users_shift_path %>

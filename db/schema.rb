@@ -11,27 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150910214230) do
+ActiveRecord::Schema.define(version: 20150917040029) do
 
   create_table "rides", force: :cascade do |t|
-    t.string  "name"
-    t.string  "sid"
-    t.string  "phone"
-    t.integer "passengers"
-    t.string  "origin"
-    t.string  "destination"
-    t.boolean "completion"
-    t.integer "vehicle_id"
+    t.string   "name"
+    t.string   "sid"
+    t.string   "phone"
+    t.integer  "passengers"
+    t.string   "origin"
+    t.string   "destination"
+    t.boolean  "completion"
+    t.integer  "vehicles_shift_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
   end
 
-  add_index "rides", ["vehicle_id"], name: "index_rides_on_vehicle_id"
+  add_index "rides", ["vehicles_shift_id"], name: "index_rides_on_vehicles_shift_id"
 
   create_table "shifts", force: :cascade do |t|
-    t.integer  "shift_id"
     t.integer  "vehicle_id"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -53,22 +53,35 @@ ActiveRecord::Schema.define(version: 20150910214230) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
   create_table "users_shifts", force: :cascade do |t|
+    t.integer  "position_id"
     t.integer  "shift_id"
     t.integer  "user_id"
-    t.integer  "position_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
+  add_index "users_shifts", ["shift_id"], name: "index_users_shifts_on_shift_id"
+  add_index "users_shifts", ["user_id"], name: "index_users_shifts_on_user_id"
+
+  create_table "vehicles", force: :cascade do |t|
+    t.integer  "vehicle_number"
+    t.string   "model"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
+
   create_table "vehicles_shifts", force: :cascade do |t|
-    t.integer  "shift_id"
-    t.integer  "vehicle_id"
     t.integer  "start_mileage"
     t.integer  "end_mileage"
     t.decimal  "start_gas"
     t.decimal  "end_gas"
+    t.integer  "shift_id"
+    t.integer  "vehicle_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end
+
+  add_index "vehicles_shifts", ["shift_id"], name: "index_vehicles_shifts_on_shift_id"
+  add_index "vehicles_shifts", ["vehicle_id"], name: "index_vehicles_shifts_on_vehicle_id"
 
 end

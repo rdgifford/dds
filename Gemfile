@@ -13,7 +13,7 @@ gem 'sdoc',                 '0.4.0', group: :doc
 gem 'devise'
 gem 'activerecord-session_store'
 gem 'rails_admin'
-gem 'jc-validates_timeliness', '~> 3.1.1'
+gem 'jc-validates_timeliness'
 
 group :development, :test do
   gem 'sqlite3',     '1.3.9'

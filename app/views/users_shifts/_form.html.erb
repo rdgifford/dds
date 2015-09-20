@@ -1,0 +1,17 @@
+<%= form_for(@users_shift) do |f| %>
+  <% if @users_shift.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@users_shift.errors.count, "error") %> prohibited this users_shift from being saved:</h2>
+
+      <ul>
+      <% @users_shift.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -14,7 +14,7 @@
   <tr align="left">
     <td><%= link_to ride.id, ride_path(ride)%></td>
     </div> </td>
-    <td><%= ride.vehicle_id %></td>
+    <td><%#= ride.vehicle_id %></td>
     <%#= select_tag(:van_id, options_for_select([1, 2, 3]),{ selected: ride.van_id }, { onchange: "$('#update').submit;" } include_blank: true) %>
     <td><%= ride.sid%></td>
     <td><%= ride.name%></td>

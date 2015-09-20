@@ -12,6 +12,7 @@ class VehiclesShiftsController < ApplicationController
   end
 
   def create
+    Vehicles_shift.create
   end
 
   def update
