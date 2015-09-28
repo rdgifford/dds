@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources       :vehicles   do
+    resources     :vehicles_shifts
+    end
+  resources       :vehicles
   resources       :shifts
   resources       :users_shifts
   resources       :shifts

@@ -1,7 +1,10 @@
 class Shift < ActiveRecord::Base
   has_many :users_shifts, dependent: :destroy
   has_many :users, through: :users_shifts
+  has_many :vehicles_shifts, dependent: :destroy
+  has_many :vehicles, through: :vehicles_shifts
   accepts_nested_attributes_for :users_shifts
+  accepts_nested_attributes_for :vehicles_shifts
 
   # validates_time :created_at, :on_or_before => '2:30_am'
   scope :active, -> { where(:created_at => Time.now.ago(5.hours)..Time.now)}
@@ -20,6 +23,12 @@ private
     if Shift.active.count >= 1
     errors.add(:base, "Shift already exists for tonight")
     end
+  end
+
+  def create_vehicles_shifts(vehicle)
+    s = Shift.active.first
+    s.vehicles_shifts.build
+    s.vehicles_shifts.find_or_create_by!(vehicle_id: vehicle)
   end
 
   def assign_pid(pid)

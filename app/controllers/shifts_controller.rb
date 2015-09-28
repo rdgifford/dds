@@ -7,6 +7,9 @@ class ShiftsController < ApplicationController
     @shift = s
     s.users_shifts.build
     @users_shift = s.users_shifts.first
+    s.vehicles_shifts.build
+    @vehicles_shift = s.vehicles_shifts.all
+    @vehicles = Vehicle.all
   end
 
   def show
@@ -38,6 +41,15 @@ class ShiftsController < ApplicationController
 
   private
   def shift_params
-    params.require(:shift).permit(:vehicle_id, users_shifts_attributes: [:position_id, :shift_id, :user_id, :created_at, :updated_at])
+    params.require(:shift).permit(:vehicle_id, users_shifts_attributes: [:position_id, :shift_id, :user_id, :created_at, :updated_at],
+                                               vehicles_attributes: [:id, :vehicle_number, :model, :created_at, :updated_at],
+                                               vehicles_shifts_attributes: [:id, :start_mileage, :end_mileage, :start_gas, :end_gas, :shift_id, :vehicle_id, :created_at, :updated_at])
   end
+
+  # def vehicles_shifts_create(vn)
+  #   s = Shift.active.first
+  #   s.vehicles_shifts.build
+  #   s.vehicles_shifts.create!(vehicle_id: vn)
+  # end
 end
+  # @vehicles_shifts = @shift.create_vehicles_shift(vehicle_id: vn)
