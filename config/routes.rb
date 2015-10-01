@@ -2,10 +2,8 @@ Rails.application.routes.draw do
   resources       :vehicles   do
     resources     :vehicles_shifts
     end
-  resources       :vehicles
   resources       :shifts
   resources       :users_shifts
-  resources       :shifts
   resources       :rides
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_scope    :user do get '/users/sign_out' => 'devise/sessions#destroy' end

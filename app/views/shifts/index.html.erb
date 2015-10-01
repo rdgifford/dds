@@ -1,4 +1,9 @@
+<!DOCTYPE html>
 <html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
   <h1>Work</h1>
     <p><strong>Shift ID</strong> <%= @shift.id %></p>
     <p><strong>Vehicle ID</strong> <%= @shift.vehicle_id %></p>
@@ -12,21 +17,25 @@
     <p><strong>User ID</strong> <%= @users_shift.user_id %></p>
     <p><strong>Created At</strong> <%= @users_shift.created_at %></p>
     <p><strong>Updated At</strong> <%= @users_shift.updated_at %></p>
-  <div class="btn-group" role="group" aria-label="...">
+  <div class="btn-group btn-group-justified" role="group" aria-label="...">
     <div class="btn-group" role="group">
       <%= form_for @users_shift do |f| %>
         <%= f.hidden_field :position_id, :value => 1 %>
         <%= f.submit 'Dispatcher', class: "btn btn-default" %>
       <% end %>
+    </div>
+    <div class="btn-group" role="group">
       <%= form_for @users_shift do |f| %>
         <%= f.hidden_field :position_id, :value => 2 %>
         <%= f.submit 'Navigator', class: "btn btn-default" %>
       <% end %>
+    </div>
+    <div class="btn-group" role="group">
       <%= form_for @users_shift do |f| %>
         <%= f.hidden_field :position_id, :value => 3 %>
         <%= f.submit 'Driver', class: "btn btn-default" %>
       <% end %>
     </div>
   </div>
-  <%= render partial: "vehicles" %>
+</body>
 </html>

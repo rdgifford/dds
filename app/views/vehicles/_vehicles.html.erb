@@ -12,23 +12,25 @@
       <th>Updated At</th>
     </thead>
     <tbody>
-      <%= @vehicles_shift.each do |vehicles_shift| %>
+      <%#= @vehicles_shift.each do |vehicles_shift| %>
         <tr>
-          <td><%= vehicles_shift.id %></td>
-          <td><%= vehicles_shift.start_mileage %></td>
-          <td><%= vehicles_shift.end_mileage %></td>
-          <td><%= vehicles_shift.start_gas %></td>
-          <td><%= vehicles_shift.end_gas %></td>
-          <td><%= vehicles_shift.shift_id %></td>
-          <td><%= vehicles_shift.vehicle_id %></td>
-          <td><%= vehicles_shift.created_at %></td>
-          <td><%= vehicles_shift.updated_at %></td>
+          <td><%#= vehicles_shift.id %></td>
+          <td><%#= vehicles_shift.start_mileage %></td>
+          <td><%#= vehicles_shift.end_mileage %></td>
+          <td><%#= vehicles_shift.start_gas %></td>
+          <td><%#= vehicles_shift.end_gas %></td>
+          <td><%#= vehicles_shift.shift_id %></td>
+          <td><%#= vehicles_shift.vehicle_id %></td>
+          <td><%#= vehicles_shift.created_at %></td>
+          <td><%#= vehicles_shift.updated_at %></td>
         </tr>
-      <% end %>
+      <%# end %>
     </tbody>
   </table>
 
   <h3>Create Vehicles Shifts</h3>
+  <%= @vehicles.each do |vehicle| %>
+  <%= form_for ([vehicle, @vehicles_shift]) do |f| %>
   <table class="table table-hover">
     <thead>
       <th> ID </th>
@@ -39,19 +41,17 @@
       <th></th>
     </thead>
     <tbody>
-      <% @vehicles.each do |vehicle| %>
         <tr>
-          <%= form_for vehicle do |f| %>
-          <td><%= check_box_tag 'vehicle_ids[]', vehicle.id %></td>
+          <td><%= f.check_box :id %></td>
+          <td><%= vehicle.id %></td>
           <td><%= vehicle.vehicle_number %></td>
           <td><%= vehicle.model %></td>
           <td><%= vehicle.created_at %></td>
           <td><%= vehicle.updated_at %></td>
         </tr>
-        <% end %>
       <% end %>
     </tbody>
   </table>
+  <%= submit_tag "Create Vehicles Shifts" %>
   <div class="btn-group" role="group" aria-label="...">
     <div class="btn-group" role="group">
-      <%= submit_tag "Create Vehicles Shifts" %>

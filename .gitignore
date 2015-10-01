@@ -9,6 +9,7 @@ log/*
 /test/tmp/
 /test/version_tmp/
 /tmp/
+/notes
 notes.rtf
 /Guardfile
 /spring/*.pid

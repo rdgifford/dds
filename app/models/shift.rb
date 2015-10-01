@@ -1,8 +1,6 @@
 class Shift < ActiveRecord::Base
   has_many :users_shifts, dependent: :destroy
-  has_many :users, through: :users_shifts
   has_many :vehicles_shifts, dependent: :destroy
-  has_many :vehicles, through: :vehicles_shifts
   accepts_nested_attributes_for :users_shifts
   accepts_nested_attributes_for :vehicles_shifts
 
@@ -16,8 +14,8 @@ class Shift < ActiveRecord::Base
   end
 
 private
-  def hours_of_operation
-  end
+  # def hours_of_operation
+  # end
 
   def active_shift_limit
     if Shift.active.count >= 1
@@ -25,16 +23,16 @@ private
     end
   end
 
-  def create_vehicles_shifts(vehicle)
-    s = Shift.active.first
-    s.vehicles_shifts.build
-    s.vehicles_shifts.find_or_create_by!(vehicle_id: vehicle)
-  end
-
-  def assign_pid(pid)
-    s = Shift.active.first
-    s.users_shifts.build
-    s.users_shifts.first_or_create!(user_id: current_user.id)
-    update_attributes(position_id: pid)
-  end
+  # def create_vehicles_shifts(vehicle)
+  #   s = Shift.active.first
+  #   s.vehicles_shifts.build
+  #   s.vehicles_shifts.create(vehicle_id: vehicle)
+  # end
+  #
+  # def assign_pid(pid)
+  #   s = Shift.active.first
+  #   s.users_shifts.build
+  #   s.users_shifts.first_or_create!(user_id: current_user.id)
+  #   update_attributes(position_id: pid)
+  # end
 end

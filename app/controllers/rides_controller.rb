@@ -38,9 +38,9 @@ class RidesController < ApplicationController
   end
 
   private
-  def assign_van
-  end
-  helper_method :assign_vehicle
+  # def assign_van
+  # end
+  # helper_method :assign_vehicle
 
   def ride_params
     params[:ride].permit(:vehicle_id, :name, :sid, :phone, :passengers, :origin, :destination)
