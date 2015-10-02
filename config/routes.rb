@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   devise_for      :users
   # resources       :sessions, only: [:new, :create, :destroy]
   root            'static_pages#home'
+  post            'create_shift' => 'shifts#create'
   get             'work' => 'shifts#index'
   get             'about' => 'static_pages#about'
   get             'policies' => 'static_pages#policies'

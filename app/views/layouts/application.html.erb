@@ -31,7 +31,7 @@
       <% if user_signed_in? %>
       <li><%= link_to('Logout', users_sign_out_path) %></li>
       <li><%= link_to('Rides', rides_path) %></li>
-      <li><%= link_to('Go to Work', shifts_path, method: :post)%></li>
+      <li><%= link_to('Go to Work', create_shift_path, method: :post)%></li>
       <li><%= link_to('Vehicles', vehicles_path)%></li>
       <% else %>
       <li><%= link_to('Login', new_user_session_path)  %></li>
