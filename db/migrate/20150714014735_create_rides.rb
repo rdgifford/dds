@@ -8,7 +8,7 @@ class CreateRides < ActiveRecord::Migration
     t.string        :origin
     t.string        :destination
     t.boolean       :completion
-    t.belongs_to    :vehicles_shift, index: true
+    t.belongs_to    :shift_vehicle, index: true
     t.timestamps null: false
     end
   end

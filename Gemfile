@@ -15,6 +15,8 @@
   gem 'rails_admin'
   gem 'jc-validates_timeliness'
   gem 'seed_dump'
+  gem 'simple_form'
+  gem 'cocoon'
 
 group :development, :test do
   gem 'sqlite3',     '1.3.9'

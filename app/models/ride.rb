@@ -1,3 +1,3 @@
 class Ride < ActiveRecord::Base
-  belongs_to :vehiclesshift
+  belongs_to :shift_vehicles
 end

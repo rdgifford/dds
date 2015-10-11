@@ -1,17 +1,9 @@
-<%= form_for(@shift) do |f| %>
-  <% if @shift.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@shift.errors.count, "error") %> prohibited this shift from being saved:</h2>
-
-      <ul>
-      <% @shift.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit %>
+<h3>Create Shift Vehicles</h3>
+  <%= simple_form_for @shift, url: create_shift_vehicles_path, method: :post do |f| %>
+    <%= f.simple_fields_for @shift_vehicles do |ff| %>
+      <%= ff.input :vehicle_id, collection: Vehicle.all, as: :check_boxes, label_method: "model" %>
+    <% end %>
+    <div>
+    <%= f.button :submit, 'Choose Vehicles!' %>
   </div>
-<% end %>
+  <% end %>

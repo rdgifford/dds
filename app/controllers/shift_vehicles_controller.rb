@@ -1,4 +1,4 @@
-class VehiclesShiftsController < ApplicationController
+class ShiftVehiclesController < ApplicationController
   def index
   end
 

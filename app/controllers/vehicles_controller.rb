@@ -4,8 +4,6 @@ class VehiclesController < ApplicationController
   # GET /vehicles
   # GET /vehicles.json
   def index
-    @vehicle = Vehicle.find(params[:id])
-    @vehicles_shift = @vehicle.vehicles_shifts.build
     @vehicles = Vehicle.all
   end
 
@@ -25,9 +23,10 @@ class VehiclesController < ApplicationController
 
   # POST /vehicles
   # POST /vehicles.json
-  def create
-    @vehicles_shift = @vehicle.vehicles_shifts.build(params[:id])
-  end
+  # def vehicles_shifts_create
+  #   v.find(params[:id])
+  #   v.map {|veh| veh.vehicles_shifts.create}
+  # end
 
   # PATCH/PUT /vehicles/1
   # PATCH/PUT /vehicles/1.json

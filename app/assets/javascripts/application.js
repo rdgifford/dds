@@ -18,3 +18,4 @@
 //= require_tree .
 //= require bootstrap
 //= require_tree ../../../vendor/assets/javascripts
+//= require cocoon

@@ -1,6 +1,6 @@
-class CreateVehiclesShifts < ActiveRecord::Migration
+class CreateShiftVehicles < ActiveRecord::Migration
   def change
-    create_table :vehicles_shifts do |t|
+    create_table :shift_vehicles do |t|
       t.integer        :start_mileage
       t.integer        :end_mileage
       t.decimal        :start_gas

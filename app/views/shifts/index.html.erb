@@ -6,36 +6,65 @@
 <body>
   <h1>Work</h1>
     <p><strong>Shift ID</strong> <%= @shift.id %></p>
-    <p><strong>Vehicle ID</strong> <%= @shift.vehicle_id %></p>
     <p><strong>Created At</strong> <%= @shift.created_at %></p>
     <p><strong>Updated At</strong> <%= @shift.updated_at %></p>
 
   <h3>Users Shift</h3>
-    <p><strong>Users Shift ID</strong> <%= @users_shift.id %></p>
-    <p><strong>Position ID</strong> <%= @users_shift.position_id %></p>
-    <p><strong>Shift ID</strong> <%= @users_shift.shift_id %></p>
-    <p><strong>User ID</strong> <%= @users_shift.user_id %></p>
-    <p><strong>Created At</strong> <%= @users_shift.created_at %></p>
-    <p><strong>Updated At</strong> <%= @users_shift.updated_at %></p>
+    <p><strong>Users Shift ID</strong> <%= @user_shift.id %></p>
+    <p><strong>Position ID</strong> <%= @user_shift.position_id %></p>
+    <p><strong>Shift ID</strong> <%= @user_shift.shift_id %></p>
+    <p><strong>User ID</strong> <%= @user_shift.user_id %></p>
+    <p><strong>Created At</strong> <%= @user_shift.created_at %></p>
+    <p><strong>Updated At</strong> <%= @user_shift.updated_at %></p>
   <div class="btn-group btn-group-justified" role="group" aria-label="...">
     <div class="btn-group" role="group">
-      <%= form_for @users_shift do |f| %>
+      <%= form_for @user_shift do |f| %>
         <%= f.hidden_field :position_id, :value => 1 %>
         <%= f.submit 'Dispatcher', class: "btn btn-default" %>
       <% end %>
     </div>
     <div class="btn-group" role="group">
-      <%= form_for @users_shift do |f| %>
+      <%= form_for @user_shift do |f| %>
         <%= f.hidden_field :position_id, :value => 2 %>
         <%= f.submit 'Navigator', class: "btn btn-default" %>
       <% end %>
     </div>
     <div class="btn-group" role="group">
-      <%= form_for @users_shift do |f| %>
+      <%= form_for @user_shift do |f| %>
         <%= f.hidden_field :position_id, :value => 3 %>
         <%= f.submit 'Driver', class: "btn btn-default" %>
       <% end %>
     </div>
   </div>
+  <h3>Shift Vehicles</h3>
+  <table class="table table-hover">
+    <thead>
+      <th>ID</th>
+      <th>Start Mileage</th>
+      <th>End Mileage</th>
+      <th>Start Gas</th>
+      <th>End Gas</th>
+      <th>Shift ID</th>
+      <th>Vehicle ID</th>
+      <th>Created At</th>
+      <th>Updated At</th>
+    </thead>
+    <% @sv.each do |shift_vehicles| %>
+    <tbody>
+        <tr>
+          <td><%= shift_vehicles.id %></td>
+          <td><%= shift_vehicles.start_mileage %></td>
+          <td><%= shift_vehicles.end_mileage %></td>
+          <td><%= shift_vehicles.start_gas %></td>
+          <td><%= shift_vehicles.end_gas %></td>
+          <td><%= shift_vehicles.shift_id %></td>
+          <td><%= shift_vehicles.vehicle_id %></td>
+          <td><%= shift_vehicles.created_at %></td>
+          <td><%= shift_vehicles.updated_at %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= render 'form' %>
 </body>
 </html>

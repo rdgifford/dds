@@ -1,0 +1,29 @@
+<h3>Create Shift Vehicles</h3>
+<% @vehicles.each do |vehicle| %>
+<%= simple_form_for(@shift) do |f| %>
+<table class="table table-hover">
+  <thead>
+    <th>    </th>
+    <th> ID </th>
+    <th>Vehicle Number</th>
+    <th>Model</th>
+    <th>Created At</th>
+    <th>Updated At</th>
+    <th></th>
+  </thead>
+  <tbody>
+      <tr>
+        <td><%= f.simple_fields_for :shift_vehicles do |ff| %>
+        <%= ff.input :vehicle_id, as: :boolean %></td>
+            <% end %>
+        <td><%= vehicle.id %></td>
+        <td><%= vehicle.vehicle_number %></td>
+        <td><%= vehicle.model %></td>
+        <td><%= vehicle.created_at %></td>
+        <td><%= vehicle.updated_at %></td>
+        </tr>
+      <%= f.button :submit %>
+        <% end %>
+    <% end %>
+  </tbody>
+</table>

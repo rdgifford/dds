@@ -27,10 +27,9 @@
       <%# end %>
     </tbody>
   </table>
-
-  <h3>Create Vehicles Shifts</h3>
-  <%= @vehicles.each do |vehicle| %>
-  <%= form_for ([vehicle, @vehicles_shift]) do |f| %>
+  <h3>Create Shift Vehicles</h3>
+  <% @vehicles.each do |vehicle| %>
+  <%= simple_form_for vehicle do |f| %>
   <table class="table table-hover">
     <thead>
       <th> ID </th>
@@ -42,16 +41,16 @@
     </thead>
     <tbody>
         <tr>
-          <td><%= f.check_box :id %></td>
+          <td><%= f.input :vehicles_shifts_create, as: :check_boxes, checked_value: :id, unchecked_value: nil %></td>
           <td><%= vehicle.id %></td>
           <td><%= vehicle.vehicle_number %></td>
           <td><%= vehicle.model %></td>
           <td><%= vehicle.created_at %></td>
           <td><%= vehicle.updated_at %></td>
+          <td> <%= f.button :submit %></td>
         </tr>
+      <% end %>
       <% end %>
     </tbody>
   </table>
-  <%= submit_tag "Create Vehicles Shifts" %>
-  <div class="btn-group" role="group" aria-label="...">
-    <div class="btn-group" role="group">
+  <%#= submit_tag "Create Vehicles Shifts" %>

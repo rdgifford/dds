@@ -1,8 +1,9 @@
 class Shift < ActiveRecord::Base
-  has_many :users_shifts, dependent: :destroy
-  has_many :vehicles_shifts, dependent: :destroy
-  accepts_nested_attributes_for :users_shifts
-  accepts_nested_attributes_for :vehicles_shifts
+  has_many :user_shifts, dependent: :destroy
+  has_many :vehicles, through: :shift_vehicles
+  has_many :shift_vehicles, dependent: :destroy
+  accepts_nested_attributes_for :user_shifts
+  accepts_nested_attributes_for :shift_vehicles
 
   # validates_time :created_at, :on_or_before => '2:30_am'
   scope :active, -> { where(:created_at => Time.now.ago(5.hours)..Time.now)}

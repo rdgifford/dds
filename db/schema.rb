@@ -21,18 +21,44 @@ ActiveRecord::Schema.define(version: 20150917040029) do
     t.string   "origin"
     t.string   "destination"
     t.boolean  "completion"
-    t.integer  "vehicles_shift_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.integer  "shift_vehicle_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
-  add_index "rides", ["vehicles_shift_id"], name: "index_rides_on_vehicles_shift_id"
+  add_index "rides", ["shift_vehicle_id"], name: "index_rides_on_shift_vehicle_id"
+
+  create_table "shift_vehicles", force: :cascade do |t|
+    t.integer  "start_mileage"
+    t.integer  "end_mileage"
+    t.decimal  "start_gas"
+    t.decimal  "end_gas"
+    t.integer  "shift_id"
+    t.integer  "vehicle_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "shift_vehicles", ["shift_id"], name: "index_shift_vehicles_on_shift_id"
+  add_index "shift_vehicles", ["vehicle_id"], name: "index_shift_vehicles_on_vehicle_id"
 
   create_table "shifts", force: :cascade do |t|
-    t.integer  "vehicle_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "user_shifts", force: :cascade do |t|
+    t.integer  "position_id"
+    t.integer  "shift_id"
+    t.integer  "user_id"
+    t.integer  "shift_vehicle_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "user_shifts", ["shift_id"], name: "index_user_shifts_on_shift_id"
+  add_index "user_shifts", ["shift_vehicle_id"], name: "index_user_shifts_on_shift_vehicle_id"
+  add_index "user_shifts", ["user_id"], name: "index_user_shifts_on_user_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -52,36 +78,11 @@ ActiveRecord::Schema.define(version: 20150917040029) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
-  create_table "users_shifts", force: :cascade do |t|
-    t.integer  "position_id"
-    t.integer  "shift_id"
-    t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  add_index "users_shifts", ["shift_id"], name: "index_users_shifts_on_shift_id"
-  add_index "users_shifts", ["user_id"], name: "index_users_shifts_on_user_id"
-
   create_table "vehicles", force: :cascade do |t|
     t.integer  "vehicle_number"
     t.string   "model"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end
-
-  create_table "vehicles_shifts", force: :cascade do |t|
-    t.integer  "start_mileage"
-    t.integer  "end_mileage"
-    t.decimal  "start_gas"
-    t.decimal  "end_gas"
-    t.integer  "shift_id"
-    t.integer  "vehicle_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-  end
-
-  add_index "vehicles_shifts", ["shift_id"], name: "index_vehicles_shifts_on_shift_id"
-  add_index "vehicles_shifts", ["vehicle_id"], name: "index_vehicles_shifts_on_vehicle_id"
 
 end
