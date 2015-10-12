@@ -43,7 +43,7 @@ class RidesController < ApplicationController
   # helper_method :assign_vehicle
 
   def ride_params
-    params[:ride].permit(:vehicle_id, :name, :sid, :phone, :passengers, :origin, :destination)
+    params[:ride].permit(:vehicle_id, :name, :sid, :phone, :passengers, :origin, :destination, :shift_vehicle_id)
   end
 
 end

@@ -14,28 +14,34 @@
     <p><strong>Position ID</strong> <%= @user_shift.position_id %></p>
     <p><strong>Shift ID</strong> <%= @user_shift.shift_id %></p>
     <p><strong>User ID</strong> <%= @user_shift.user_id %></p>
+    <p><strong>Shift Vehicle ID</strong> <%= @user_shift.shift_vehicle_id %></p>
     <p><strong>Created At</strong> <%= @user_shift.created_at %></p>
     <p><strong>Updated At</strong> <%= @user_shift.updated_at %></p>
   <div class="btn-group btn-group-justified" role="group" aria-label="...">
     <div class="btn-group" role="group">
       <%= form_for @user_shift do |f| %>
-        <%= f.hidden_field :position_id, :value => 1 %>
+        <%= f.hidden_field :position_id, value: 1 %>
         <%= f.submit 'Dispatcher', class: "btn btn-default" %>
       <% end %>
     </div>
     <div class="btn-group" role="group">
       <%= form_for @user_shift do |f| %>
-        <%= f.hidden_field :position_id, :value => 2 %>
+        <%= f.hidden_field :position_id, value: 2 %>
         <%= f.submit 'Navigator', class: "btn btn-default" %>
       <% end %>
     </div>
     <div class="btn-group" role="group">
       <%= form_for @user_shift do |f| %>
-        <%= f.hidden_field :position_id, :value => 3 %>
+        <%= f.hidden_field :position_id, value: 3 %>
         <%= f.submit 'Driver', class: "btn btn-default" %>
       <% end %>
     </div>
   </div>
+  <h3>Choose your Vehicle</h3>
+    <%= simple_form_for @user_shift do |f| %>
+      <%= f.association :shift_vehicle, label_method: "vehicle_id" %>
+      <%= f.button :submit %>
+    <% end %>
   <h3>Shift Vehicles</h3>
   <table class="table table-hover">
     <thead>

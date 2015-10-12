@@ -10,6 +10,7 @@ class ShiftsController < ApplicationController
     @sv = s.shift_vehicles.all
     s.user_shifts.build
     @user_shift = s.user_shifts.first
+    #this could be a problem when other users start getting into the system
   end
 
   def show

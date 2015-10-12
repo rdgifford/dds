@@ -21,9 +21,9 @@ class UserShiftsController < ApplicationController
 
 #update the position_id attribute and redirect to the work controller.
   def update
-    @users_shift=UserShift.find(params[:id])
-    @users_shift.update(user_shift_params)
-    @users_shift.save
+    @user_shift=UserShift.find(params[:id])
+    @user_shift.update(user_shift_params)
+    @user_shift.save
     redirect_to work_path
   end
 
@@ -32,6 +32,6 @@ class UserShiftsController < ApplicationController
 
 private
   def user_shift_params
-    params[:user_shift].permit(:position_id, :shift_id, :user_id, :created_at, :updated_at)
+    params[:user_shift].permit(:id, :position_id, :shift_id, :user_id, :shift_vehicle_id, :created_at, :updated_at)
   end
 end
