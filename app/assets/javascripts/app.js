@@ -25,7 +25,7 @@
             alert('There was a problem calling you - please try again later.');
         }).always(function() {
             $submit.removeAttr('disabled'),
-            format: 'js';
+            dataType: 'script';
         });
 
     });
