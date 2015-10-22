@@ -1,10 +1,10 @@
 // Execute JavaScript on page load
-$(function() {
-    $('#phoneNumber').intlTelInput({
-        responsiveDropdown: true,
-        autoFormat: true,
-        utilsScript: 'assets/intl-phone/libphonenumber/build/utils.js'
-    });
+// $(function() {
+//     $('#phoneNumber').intlTelInput({
+//         responsiveDropdown: true,
+//         autoFormat: true,
+//         utilsScript: 'assets/intl-phone/libphonenumber/build/utils.js'
+//     });
     var $form = $('#contactform'),
         $submit = $('#contactform input[type=submit]');
 
