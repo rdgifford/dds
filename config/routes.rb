@@ -9,8 +9,11 @@ Rails.application.routes.draw do
   devise_scope    :user do get '/users/sign_out' => 'devise/sessions#destroy' end
   devise_for      :users
   # resources       :sessions, only: [:new, :create, :destroy]
+  post 'call' => 'twilio#call'
+  post 'connect' => 'twilio#connect'
+  get             'call' => 'rides#call'
   post            'create_shift_vehicles' => "shifts#create_vs"
-  root            'static_pages#home'
+  # root            'static_pages#home'
   post            'create_shift' => 'shifts#create'
   get             'work' => 'shifts#index'
   get             'about' => 'static_pages#about'

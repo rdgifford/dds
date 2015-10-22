@@ -1,0 +1,20 @@
+<div class="btn-group btn-group-justified" role="group" aria-label="...">
+  <div class="btn-group" role="group">
+    <%= form_for(@user_shift, remote: true) do |f| %>
+      <%= f.hidden_field :position_id, value: 1 %>
+      <%= f.submit 'Dispatcher', class: "btn btn-default" %>
+    <% end %>
+  </div>
+  <div class="btn-group" role="group">
+    <%= form_for(@user_shift, remote: true) do |f| %>
+      <%= f.hidden_field :position_id, value: 2 %>
+      <%= f.submit 'Navigator', class: "btn btn-default" %>
+    <% end %>
+  </div>
+  <div class="btn-group" role="group">
+    <%= form_for(@user_shift, remote: true) do |f| %>
+      <%= f.hidden_field :position_id, value: 3 %>
+      <%= f.submit 'Driver', class: "btn btn-default" %>
+    <% end %>
+  </div>
+</div>

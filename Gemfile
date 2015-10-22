@@ -17,6 +17,10 @@
   gem 'seed_dump'
   gem 'simple_form'
   gem 'cocoon'
+  gem 'gmaps4rails', '~> 2.1.2'
+  gem 'twilio-ruby', '~> 4.2.1'
+  gem 'phony_rails'
+  gem 'therubyracer'
 
 group :development, :test do
   gem 'sqlite3',     '1.3.9'

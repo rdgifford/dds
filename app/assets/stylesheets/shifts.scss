@@ -1,3 +1,36 @@
 // Place all the styles related to the shifts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#contactform .btn:hover {
+  background: rgba(9,8,77,0.7);
+}
+
+#map-canvas {
+  width: 100%;
+  height: 300px;
+  margin-bottom: 15px;
+}
+
+.group1_opts {
+	display: none;
+}
+.group2_opts {
+	display: none;
+}
+.group3_opts {
+	display: none;
+}
+.group1 .group1_opts {
+	display: block;
+}
+.group2 .group2_opts {
+	display: block;
+}
+.group3 .group3_opts {
+	display: block;
+}
+
+#skillSSet {
+	display: none;
+}

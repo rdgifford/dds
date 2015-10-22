@@ -1,0 +1,4 @@
+<%= simple_form_for @user_shift, html: {class: "form-inline"}, remote: true do |f| %>
+  <%= f.association :shift_vehicle, label_method: "vehicle_id" %>
+  <%= f.button :submit %>
+<% end %>
