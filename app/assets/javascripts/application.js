@@ -21,7 +21,6 @@
 //= require bootstrap
 //= require_tree ../../../vendor/assets/javascripts
 //= require cocoon
-//= require underscore
 //= require gmaps/google
 //= require therubyracer
 
