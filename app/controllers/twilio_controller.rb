@@ -3,6 +3,7 @@ require 'twilio-ruby'
 class TwilioController < ApplicationController
   # Before we allow the incoming request to connect, verify
   # that it is a Twilio request
+  skip_before_filter  :verify_authenticity_token
   before_filter :authenticate_twilio_request, :only => [
     :connect
   ]
