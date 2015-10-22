@@ -1,3 +1,5 @@
+require 'twilio-ruby'
+
 class RidesController < ApplicationController
   before_filter :authenticate_user!, only: [:index, :edit, :destroy, :show, :update]
   require 'twilio-ruby'
