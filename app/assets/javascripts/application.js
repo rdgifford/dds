@@ -22,6 +22,5 @@
 //= require_tree ../../../vendor/assets/javascripts
 //= require cocoon
 //= require gmaps/google
-//= require therubyracer
 
 // Execute JavaScript on page load
