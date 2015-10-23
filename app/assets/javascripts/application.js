@@ -14,13 +14,13 @@
 //= require jquery-ui
 //= require jquery_ujs
 //= require turbolinks
-//= require bootstrap-sprockets
+= require bootstrap-sprockets
 //= require jquery.min
 //= require app
 //= require_tree .
 //= require bootstrap
 //= require_tree ../../../vendor/assets/javascripts
 //= require cocoon
-//= require gmaps/google
+= require gmaps/google
 
 // Execute JavaScript on page load
