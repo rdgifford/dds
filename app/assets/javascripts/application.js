@@ -11,8 +11,6 @@
 // about supported directives.
 //
 //= require jquery.min
-//= require intl-phone/js/intlTelInput
-//= require intl-phone/libphonenumber/build/utils.js
 //= require app
 //= require_tree .
 = require jquery
