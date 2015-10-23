@@ -10,17 +10,22 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
-//= require jquery-ui
-//= require jquery_ujs
-//= require turbolinks
-= require bootstrap-sprockets
 //= require jquery.min
+//= require intl-phone/js/intlTelInput
+//= require intl-phone/libphonenumber/build/utils.js
 //= require app
 //= require_tree .
-//= require bootstrap
-//= require_tree ../../../vendor/assets/javascripts
-//= require cocoon
+= require jquery
+= require jquery-ui
+= require jquery_ujs
+= require turbolinks
+= require bootstrap-sprockets
+= require jquery.min
+= require app
+= require_tree .
+= require bootstrap
+= require_tree ../../../vendor/assets/javascripts
+= require cocoon
 = require gmaps/google
 
 // Execute JavaScript on page load
