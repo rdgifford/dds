@@ -20,7 +20,8 @@
   gem 'gmaps4rails', '~> 2.1.2'
   gem 'twilio-ruby', '~> 4.2.1'
   gem 'phony_rails'
-  gem 'therubyracer'
+  # gem 'therubyracer'
+  #not recommended with heroku due to large memory use
 
 group :development, :test do
   gem 'sqlite3',     '1.3.9'
