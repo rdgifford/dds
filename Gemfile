@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails'
 gem 'bcrypt'
-gem 'bootstrap-sass',       '3.2.0.0'
+gem 'bootstrap', '~> 4.0.0.alpha3'
 gem 'sass-rails',           '5.0.2'
 gem 'uglifier',             '2.5.3'
 gem 'coffee-rails',         '4.1.0'
@@ -17,6 +17,10 @@ gem 'jc-validates_timeliness'
 gem 'seed_dump'
 gem 'simple_form'
 gem 'cocoon'
+
+source 'https://rails-assets.org' do
+  gem 'rails-assets-tether', '>= 1.1.0'
+end
 
 group :development, :test do
   gem 'sqlite3',     '1.3.9'

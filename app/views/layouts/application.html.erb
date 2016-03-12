@@ -1,65 +1,61 @@
 <!DOCTYPE html>
 <html>
-<%= javascript_include_tag  "jquery" %>
-<%= javascript_include_tag  "jquery_ujs" %>
-<%= javascript_include_tag  "bootstrap" %>
-<%= stylesheet_link_tag     "application" %>
-<head>
-  <%= csrf_meta_tags %>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><%= content_for?(:title) ? yield(:title) : "Designated Driver Shuttle" %></title>
-</head>
-<body>
-  <p></p>
-  <script>
-  $(document).ready(function(){
-    $(".nav-tabs a").click(function(){
-      $(this).tab('show');
-    });
-  });
-  </script>
-<ul class="nav nav-tabs nav-justified" role="tablist">
-  <li role="presentation"><a href="/"><span class="label label-danger">DDS</span></a></li>
-  <li role="presentation" class="<%= 'active' if current_page?(new_ride_path) %>"><a href="/rides/new">Request Ride</a></li>
-  <li role="presentation" class="<%= 'active' if current_page?(about_path) %>"><a href="/about">About</a></li>
-  <li role="presentation" class="<%= 'active' if current_page?(policies_path) %>"><a href="/policies">Policies</a></li>
-  <li role="presentation" class="<%= 'active' if current_page?(faq_path) %>"><a href="/faq">FAQ</a></li>
-  <li role="presentation" class="dropdown">
-    <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
-    <ul class="dropdown-menu">
-      <% if user_signed_in? %>
-      <li><%= link_to('Logout', users_sign_out_path) %></li>
-      <li><%= link_to('Rides', rides_path) %></li>
-      <li><%= link_to('Go to Work', create_shift_path, method: :post)%></li>
-      <li><%= link_to('Vehicles', vehicles_path)%></li>
-      <% else %>
-      <li><%= link_to('Login', new_user_session_path)  %></li>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= content_for?(:title) ? yield(:title) : "Designated Driver Shuttle" %></title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-full navbar-dark bg-inverse">
+      <a class="navbar-brand" href="/">DDS</a>
+      <ul class="nav navbar-nav">
+        <li class="nav-item <%= 'active' if current_page?(new_ride_path) %>"><a class="nav-link" href="/rides/new">Request Ride</a></li>
+        <li class="nav-item <%= 'active' if current_page?(about_path) %>"><a class="nav-link" href="/about">About</a></li>
+        <li class="nav-item <%= 'active' if current_page?(policies_path) %>"><a class="nav-link" href="/policies">Policies</a></li>
+        <li class="nav-item <%= 'active' if current_page?(faq_path) %>"><a class="nav-link" href="/faq">FAQ</a></li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" 
+                                                                     role="button" aria-haspopup="true" aria-expanded="false">Account</a>
+          <div class="dropdown-menu" aria-labelledby="Preview">
+            <% if user_signed_in? %>
+              <%= link_to 'Logout', users_sign_out_path, class: "dropdown-item" %>
+              <%= link_to 'Rides', rides_path, class: "dropdown-item" %>
+              <%= link_to 'Go to Work', create_shift_path, method: :post, class: "dropdown-item"%>
+              <%= link_to 'Vehicles', vehicles_path, class: "dropdown-item" %>
+            <% else %>
+              <%= link_to 'Login', new_user_session_path, class: "dropdown-item" %>
+            <% end %>
+          </div>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <% unless notice.nil? %>
+        <p></p>
+        <div class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <%= notice %>
+        </div>
       <% end %>
-    </ul>
-  </li>
-</ul>
-<div class="container">
-  <% unless notice.nil? %>
-  <p></p>
-  <div class="alert alert-success alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <%= notice %>
-  </div>
-<% end %>
-<p></p>
-<% unless alert.nil? %>
-  <div class="alert alert-info alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <%= alert %>
-  </div>
-<% end %>
-  <%= yield %>
-  <%= debug(params) if Rails.env.development? %>
- </div>
-<div class="footer">
-  <p align="center">&copy; Company | Privacy | Terms</p>
-</div>
-</div>
-</body>
+      <p></p>
+      <% unless alert.nil? %>
+        <div class="alert alert-info alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <%= alert %>
+        </div>
+      <% end %>
+      <%= yield %>
+      <%= debug(params) if Rails.env.development? %>
+    </div>
+    <div class="footer">
+      <p align="center">&copy; Company | Privacy | Terms</p>
+    </div>
+    </div>
+  </body>
 </html>
