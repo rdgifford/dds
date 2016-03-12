@@ -7,8 +7,9 @@
 
 <table class="table">
   <thead class="thead-default">
+    <th>Id</th>
     <th>Van</th>
-    <th>UO ID</th>
+    <th>Student Id</th>
     <th>Rider Name</th>
     <th>Origin</th>
     <th>Destination</th>
@@ -19,6 +20,7 @@
   <tbody>
     <% @rides.each do |ride| %>
       <tr>
+        <td><%= link_to ride.id, ride %></td>
         <td><%= ride.shift_vehicle_id%></td>
         <td><%= ride.sid%></td>
         <td><%= ride.name%></td>
@@ -27,7 +29,6 @@
         <td><%= ride.passengers%></td>
         <td><%= ride.phone%></td>
         <td>
-          <%= link_to "Show", ride_path(ride) %>
           <%= link_to "Edit", edit_ride_path(ride), class: "text-warning" %>
           <%= link_to "Delete", ride_path(ride), class: "text-danger",  method: :delete, 
             data: { confirm: "Are you sure you want to delete this ride?" } %>
