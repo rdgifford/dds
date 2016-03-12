@@ -13,25 +13,17 @@
     <nav class="navbar navbar-full navbar-dark bg-inverse">
       <a class="navbar-brand" href="/">DDS</a>
       <ul class="nav navbar-nav">
-        <li class="nav-item <%= 'active' if current_page?(new_ride_path) %>"><a class="nav-link" href="/rides/new">Request Ride</a></li>
-        <li class="nav-item <%= 'active' if current_page?(about_path) %>"><a class="nav-link" href="/about">About</a></li>
-        <li class="nav-item <%= 'active' if current_page?(policies_path) %>"><a class="nav-link" href="/policies">Policies</a></li>
-        <li class="nav-item <%= 'active' if current_page?(faq_path) %>"><a class="nav-link" href="/faq">FAQ</a></li>
-
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" 
-                                                                     role="button" aria-haspopup="true" aria-expanded="false">Account</a>
-          <div class="dropdown-menu" aria-labelledby="Preview">
-            <% if user_signed_in? %>
-              <%= link_to 'Logout', users_sign_out_path, class: "dropdown-item" %>
-              <%= link_to 'Rides', rides_path, class: "dropdown-item" %>
-              <%= link_to 'Go to Work', create_shift_path, method: :post, class: "dropdown-item"%>
-              <%= link_to 'Vehicles', vehicles_path, class: "dropdown-item" %>
-            <% else %>
-              <%= link_to 'Login', new_user_session_path, class: "dropdown-item" %>
-            <% end %>
-          </div>
-        </li>
+        <% if user_signed_in? %>
+          <li class="nav-item"><%= link_to 'Rides', rides_path, class: "nav-link" %></li>
+          <li class="nav-item"><%= link_to 'Go to Work', create_shift_path, method: :post, class: "nav-link"%></li> <li class="nav-item"><%= link_to 'Vehicles', vehicles_path, class: "nav-link" %></li>
+        <% end %>
+      </ul>
+      <ul class="nav navbar-nav pull-xs-right">
+        <% if user_signed_in? %>
+          <li class="nav-item"><%= link_to 'Logout', users_sign_out_path, class: "nav-link" %></li>
+        <% else %>
+          <li class="nav-item"><%= link_to 'Login', new_user_session_path, class: "nav-link" %></li>
+        <% end %>
       </ul>
     </nav>
 
@@ -52,5 +44,14 @@
       <% end %>
       <%= yield %>
     </div>
+
+    <!--
+    <footer>
+      <a href="/rides/new">Request Ride</a>
+      <a href="/about">About</a>
+      <a href="/policies">Policies</a>
+      <a href="/faq">FAQ</a>
+    </footer>
+    -->
   </body>
 </html>
