@@ -40,3 +40,4 @@ build/
 .rvmrc
 
 db/*.sqlite3
+.env
