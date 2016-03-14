@@ -1,13 +1,40 @@
-<h1>New Ride</h1>
-<%= javascript_include_tag  "jquery" %>
-<%= javascript_include_tag  "jquery_ujs" %>
-  <%= simple_form_for @ride do |f| %>
-    <%= f.association :shift_vehicle, label_method: "vehicle_id" %>
-    <%= f.button :submit %>
-  <% end %>
-<p><strong>Student ID</strong> <%= @ride.sid %></p>
-<p><strong>Name</strong> <%= @ride.name %></p>
-<p><strong>Origin Address</strong> <%= @ride.origin %></p>
-<p><strong>Destination Address</strong> <%= @ride.destination %></p>
-<p><strong>Number of Passengers</strong> <%= @ride.passengers %></p>
-<p><strong>Phone Number</strong> <%= @ride.phone %></p>
+<div class="clearfix">
+  <h2 class="pull-xs-left">Ride #<%= @ride.id %></h2>
+  <%= link_to "Edit", edit_ride_path(@ride), class: "btn btn-primary pull-xs-right" %>
+</div>
+
+<br>
+
+<div class="row">
+  <div class="col-sm-4">
+    <dl>
+      <dt>Name</dt> 
+      <dd><%= @ride.name %></dd>
+
+      <dt>Phone Number</dt> 
+      <dd><%= link_to @ride.phone, "tel:#{@ride.phone}" %></dd>
+
+      <dt>Student ID</dt> 
+      <dd><%= @ride.sid %></dd>
+      <dt>Origin</dt> 
+      <dd><%= @ride.origin %></dd>
+
+      <dt>Destination</dt> 
+      <dd><%= @ride.destination %></dd>
+
+      <dt>Passengers</dt> 
+      <dd><%= @ride.passengers %></dd>
+
+      <dt>Shift Vehicle</dt> 
+      <dd><%= @ride.shift_vehicle_id %></dd>
+    </dl>
+  </div>
+
+
+  <div class="col-sm-8">
+    <div class="google-maps">
+      <iframe frameborder="0" style="border:0"
+         src="https://www.google.com/maps/embed/v1/directions?origin=<%= @ride.origin %>,Eugene+OR&destination=<%= @ride.destination %>,Eugene+OR&key=<%= ENV["GOOGLE_MAPS_API_KEY"] %>"></iframe> 
+    </div>
+  </div>
+</div>

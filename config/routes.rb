@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resources       :shifts
   resources       :user_shifts
   resources       :rides
-  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  # mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_scope    :user do get '/users/sign_out' => 'devise/sessions#destroy' end
   devise_for      :users
   # resources       :sessions, only: [:new, :create, :destroy]
